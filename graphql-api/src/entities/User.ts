@@ -22,6 +22,10 @@ export class User extends BaseEntity {
   mail: string;
 
   @Field()
+  @Column({ unique: true })
+  name: string;
+
+  @Field()
   @Column()
   hashedPassword: string;
 

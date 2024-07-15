@@ -9,7 +9,7 @@ clean:
 enter:
 	docker exec -it $(target) sh
 
-dev: stop
+dev: 
 	docker compose --env-file .dev.env -f compose.yaml -f compose.dev.yaml up -d
 
 test:

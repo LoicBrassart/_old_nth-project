@@ -22,6 +22,9 @@ class NewUserInput implements Partial<User> {
 
   @Field()
   password: string;
+
+  @Field()
+  name: string;
 }
 
 function setCookie(ctx: any, key: string, value: string) {
@@ -36,8 +39,8 @@ function setCookie(ctx: any, key: string, value: string) {
 }
 function getUserPublicProfile(user: User) {
   return {
-    mail: user.mail,
     id: user.id,
+    name: user.name,
     roles: user.roles,
   };
 }
@@ -45,6 +48,7 @@ function getUserTokenContent(user: User) {
   return {
     id: user.id,
     roles: user.roles,
+    name: user.name,
   };
 }
 
@@ -84,6 +88,7 @@ class UserResolver {
       const user = await User.save({
         mail: userData.mail,
         hashedPassword,
+        name: userData.name,
       });
       const token = jwt.sign(getUserTokenContent(user), JWT_SECRET);
       setCookie(context, "token", token);
