@@ -1,0 +1,11 @@
+services:
+  e2e:
+    build: ./e2e
+    volumes:
+      - ./persist/e2e/report:/app/playwright-report
+      - ./persist/e2e/results:/app/test-results
+    depends_on:
+      - gateway
+
+  web-app:
+    command: npm run test
