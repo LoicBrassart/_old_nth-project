@@ -2,7 +2,7 @@
 
 ## Content
 
-- 🔜 webapp/: React/Vite/React-Router frontend app
+- ✅ webapp/: React/Vite/React-Router frontend app
 - ✅ graphql-api/: Standalone GraphQL api
 - 🔜 restAPI/: REST api on a Node/Express server
 - 🔜 companionApp/: mobile app in React-Native

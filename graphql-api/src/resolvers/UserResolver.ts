@@ -56,7 +56,11 @@ function getUserTokenContent(user: User) {
 class UserResolver {
   @Query(() => [User])
   async getAllUsers() {
-    return await User.find();
+    return (await User.find()).map((user) => ({
+      name: user.name,
+      id: user.id,
+      roles: user.roles,
+    }));
   }
 
   @Mutation(() => String)
@@ -75,6 +79,7 @@ class UserResolver {
       setCookie(context, "token", token);
       return JSON.stringify(getUserPublicProfile(user));
     } catch (err) {
+      console.error(err);
       return err;
     }
   }
