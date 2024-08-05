@@ -1,7 +1,7 @@
+import type { Context } from "@/types/Context";
 import * as argon2 from "argon2";
-import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import { User } from "../entities/User";
+import * as jwt from "jsonwebtoken";
 import {
   Arg,
   Ctx,
@@ -11,6 +11,7 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
+import { User } from "../entities/User";
 
 dotenv.config();
 const { COOKIE_TTL, JWT_SECRET } = process.env;
@@ -27,14 +28,14 @@ class NewUserInput implements Partial<User> {
   name: string;
 }
 
-function setCookie(ctx: any, key: string, value: string) {
+function setCookie(ctx: Context, key: string, value: string) {
   if (!COOKIE_TTL) throw new Error("Missing TTL conf key!");
   const myDate = new Date();
   const expiryTStamp = myDate.getTime() + Number(COOKIE_TTL);
   myDate.setTime(expiryTStamp);
   ctx.res.setHeader(
     "Set-Cookie",
-    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`
+    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`,
   );
 }
 function getUserPublicProfile(user: User) {
@@ -64,14 +65,14 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async login(@Arg("data") userData: NewUserInput, @Ctx() context: any) {
+  async login(@Arg("data") userData: NewUserInput, @Ctx() context: Context) {
     try {
       if (!JWT_SECRET) throw new Error();
       const user = await User.findOneByOrFail({ mail: userData.mail });
 
       const isValid = await argon2.verify(
         user.hashedPassword,
-        userData.password
+        userData.password,
       );
       if (!isValid) throw new Error();
 
@@ -85,7 +86,7 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async signup(@Arg("data") userData: NewUserInput, @Ctx() context: any) {
+  async signup(@Arg("data") userData: NewUserInput, @Ctx() context: Context) {
     try {
       if (!JWT_SECRET) throw new Error("Missing JWT secret env variable");
 

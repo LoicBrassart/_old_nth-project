@@ -1,5 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Field, ObjectType, registerEnumType } from "type-graphql";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export enum Roles {
   ADMIN = "ADMIN",

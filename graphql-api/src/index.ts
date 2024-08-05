@@ -1,9 +1,9 @@
 import "reflect-metadata";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
 import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
 import { buildSchema } from "type-graphql";
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
 import { dataSource } from "./config/db";
 import UserResolver from "./resolvers/UserResolver";
 
@@ -21,7 +21,7 @@ const start = async () => {
       if (userRoles.includes("ADMIN")) return true;
 
       return !!neededRoles.filter((roleCandidate) =>
-        userRoles.includes(roleCandidate)
+        userRoles.includes(roleCandidate),
       ).length;
     },
   });
@@ -38,14 +38,14 @@ const start = async () => {
 
       const payload = jwt.verify(
         req.headers.cookie.split("token=")[1],
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
       );
       if (typeof payload === "string") return { res };
       return { payload, res };
     },
   });
 
-  console.log(`🚀  Server ready at: ${url}`);
+  console.info(`🚀  Server ready at: ${url}`);
 };
 
 start();

@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import viteLogo from "/vite.svg";
+import reactLogo from "./assets/react.svg";
 import { Button } from "./lib/shadcn/components/ui/button";
 
 function App() {
@@ -11,7 +11,10 @@ function App() {
     evt.preventDefault();
     const formData = new FormData(evt.target as HTMLFormElement);
     const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
+
+    return formJson;
+    // Do something with your data
+    //console.log(formJson);
   };
 
   const hChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -21,10 +24,10 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>

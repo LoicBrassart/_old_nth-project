@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
-import { expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { expect, test } from "vitest";
 
 import App from "../App";
 
@@ -9,6 +9,6 @@ test("displays something", async () => {
   expect(
     await screen.findByText("Here's the content", {
       exact: false,
-    })
+    }),
   ).toBeInTheDocument();
 });
