@@ -1,3 +1,4 @@
 *.env
 persist/
 .vscode/
+node_modules/
