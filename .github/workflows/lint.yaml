@@ -17,9 +17,7 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: | 
-            web-app/node_modules
-            graphql-api/node_modules
+          path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -28,10 +26,10 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install Dependencies
-        run: |
-          cd web-app && npm i
-          cd ../graphql-api && npm i
+        run: npm i
 
       # Real Jobs
       - name: Run Biome Lint Check
         run: npx @biomejs/biome check .
+      - name: Say Hi
+        run: echo "Hello Boï!"
