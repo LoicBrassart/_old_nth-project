@@ -1,7 +1,13 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
   "files": {
-    "ignore": ["**/dist/*", "**/*.template.*", "**/tsconfig.json", "coverage"]
+    "ignore": [
+      "**/dist/*",
+      "**/*.template.*",
+      "**/tsconfig*.json",
+      "coverage",
+      "**/node_modules"
+    ]
   },
   "formatter": { "indentStyle": "space" },
   "organizeImports": { "enabled": true },
