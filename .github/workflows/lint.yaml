@@ -29,7 +29,7 @@ jobs:
         run: npm i
 
       # Real Jobs
-      - name: Run Biome Lint Check
-        run: npx @biomejs/biome check .
       - name: Say Hi
         run: echo "Hello Boï!"
+      - name: Run Biome Lint Check
+        run: npx @biomejs/biome check .
