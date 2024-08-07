@@ -1,0 +1,27 @@
+name: Run Unit Tests
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - dev
+    types: [opened, reopened, edited]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Base Initialization
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Install Dependencies
+        run: npm ci
+
+      # Real Jobs
+      - name: Frontend
+        run: |
+          cd web-app
+          npm ci
+          npm run test
