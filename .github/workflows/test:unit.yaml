@@ -1,9 +1,6 @@
 name: Run Unit Tests
 
 on:
-  push:
-    branches:
-      - '**'
   pull_request:
     branches:
       - dev
@@ -25,3 +22,4 @@ jobs:
           cd web-app
           npm ci
           npm run test
+      # TODO: Backend
