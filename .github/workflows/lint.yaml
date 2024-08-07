@@ -13,23 +13,22 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Say Hi
-        run: echo "Hello Boï!"
       # Base Initialization
-      # - name: Cache node_modules
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm ci
+
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18.x'
       - name: Install Dependencies
         run: npm i
 
       # Real Jobs
+      - name: Say Hi
+        run: echo "Hello Boï!"
       - name: Run Biome Lint Check
         run: npx @biomejs/biome check .
