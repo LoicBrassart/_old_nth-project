@@ -30,9 +30,9 @@ jobs:
           node-version: '18.x'
       - name: Install Dependencies
         run: |
-          npm ci
-          cd web-app && npm ci
-          cd ../graphql-api && npm ci
+          npm i
+          cd web-app && npm i
+          cd ../graphql-api && npm i
 
       # Real Jobs
       - name: Run Biome Lint Check
