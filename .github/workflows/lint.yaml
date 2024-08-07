@@ -13,6 +13,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Say Hi
+        run: echo "Hello Boï!"
       # Base Initialization
       # - name: Cache node_modules
       #   uses: actions/cache@v3
@@ -29,7 +31,5 @@ jobs:
         run: npm i
 
       # Real Jobs
-      - name: Say Hi
-        run: echo "Hello Boï!"
       - name: Run Biome Lint Check
         run: npx @biomejs/biome check .
