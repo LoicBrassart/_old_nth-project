@@ -6,7 +6,8 @@
       "**/*.template.*",
       "**/tsconfig*.json",
       "coverage",
-      "**/node_modules"
+      "**/node_modules",
+      "persist/"
     ]
   },
   "formatter": { "indentStyle": "space" },
