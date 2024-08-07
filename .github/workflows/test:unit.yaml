@@ -5,6 +5,7 @@ on:
     branches:
       - dev
       - master
+      - main
     types: [opened, reopened, edited]
 
 jobs:
@@ -23,4 +24,4 @@ jobs:
           cd web-app
           npm ci
           npm run test
-      # TODO: Backend
+      # TODO: Backend + Others
