@@ -1,0 +1,50 @@
+name: Squash all commits
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+    types: [opened, reopened, edited]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Base Initialization
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Install Dependencies
+        run: npm ci
+
+      # Real Jobs
+      - name: Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Get Pull Request Title
+        id: pr_title
+        uses: octokit/request-action@v3
+        with:
+          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
+          headers: '{"accept": "application/vnd.github.v3+json"}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Squash All Commits and Push
+        run: |
+          # Get PR title from previous step
+          PR_TITLE=$(echo "${{ steps.pr_title.outputs.data }}" | jq -r '.title')
+
+          # Rebase the PR branch to main/master
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          git rebase origin/${{ github.event.pull_request.base.ref }}
+
+          # Squash all commits
+          git reset $(git merge-base HEAD origin/${{ github.event.pull_request.base.ref }})
+          git add .
+          git commit -m "$PR_TITLE"
+
+          # Push changes back to the PR branch
+          git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}

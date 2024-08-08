@@ -1,4 +1,4 @@
-name: Run E2E Tests
+name: Run Integration Tests
 
 on:
   pull_request:
@@ -18,5 +18,5 @@ jobs:
         run: npm ci
 
       # Real Jobs
-      - name: E2E
+      - name: Integration
         run: echo "TODO" & exit 1
