@@ -35,7 +35,7 @@ jobs:
       - name: Squash All Commits and Push
         run: `|
           # Get PR title from previous step
-          PR_TITLE=$(echo "${{ steps.pr_title.outputs.data }}" | jq -r '.title')
+          PR_TITLE=$(echo "${{ steps.pr_title.outputs.data.title }}")
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
           echo $PR_TITLE
 
