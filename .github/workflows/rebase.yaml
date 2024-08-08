@@ -55,6 +55,7 @@ jobs:
 
           # Rebase the PR branch to main/master
           git fetch origin $BRANCH_NAME:$BRANCH_NAME
+          git fetch origin $PR_BRANCH_NAME:$PR_BRANCH_NAME
           git checkout $PR_BRANCH_NAME
           git rebase origin/$BRANCH_NAME
 
