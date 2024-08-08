@@ -36,10 +36,11 @@ jobs:
         run: |
           # Get PR title from previous step
           PR_TITLE="ci: squash everything together"
+          BRANCH_NAME=${{ github.event.pull_request.base.ref }}
 
           # Rebase the PR branch to main/master
-          git fetch origin ${{ github.event.pull_request.base.ref }}
-          git rebase origin/${{ github.event.pull_request.base.ref }}
+          git fetch origin $BRANCH_NAME:$BRANCH_NAME
+          git rebase origin/$BRANCH_NAME
 
           # Squash all commits
           git reset $(git merge-base HEAD origin/${{ github.event.pull_request.base.ref }})
