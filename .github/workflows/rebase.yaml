@@ -25,17 +25,22 @@ jobs:
       
       - name: Get Pull Request Title
         id: pr_title
-        uses: octokit/request-action@v2.x
+        uses: actions/github-script@v6
         with:
-          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
-          headers: '{"accept": "application/vnd.github.v3+json"}'
+          script: |
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+            return pullRequest.title;
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Squash All Commits and Push
         run: |
           # Get PR title from previous step
-          PR_TITLE=$(echo "${{ steps.pr_title.outputs.data }}" | jq -r '.title')
+          PR_TITLE="${{ steps.pr_title.outputs.result }}"
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
           echo $PR_TITLE
 
