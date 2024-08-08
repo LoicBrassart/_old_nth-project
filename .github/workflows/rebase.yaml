@@ -63,4 +63,4 @@ jobs:
           git commit -m "ci: $PR_TITLE"
 
           # Push changes back to the PR branch
-          git push --force-with-lease origin $PR_BRANCH_NAME
+          git push --force-with-lease "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" $PR_BRANCH_NAME
