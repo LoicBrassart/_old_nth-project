@@ -35,7 +35,7 @@ jobs:
       - name: Squash All Commits and Push
         run: |
           # Get PR title from previous step
-          PR_TITLE="ci: Squash"
+          PR_TITLE="ci: squash everything together"
 
           # Rebase the PR branch to main/master
           git fetch origin ${{ github.event.pull_request.base.ref }}
