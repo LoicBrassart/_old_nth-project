@@ -35,7 +35,7 @@ jobs:
       - name: Squash All Commits and Push
         run: |
           # Get PR title from previous step
-          PR_TITLE=$(echo "${{ steps.pr_title.outputs.data.title }}")
+          PR_TITLE=$(echo "${{ steps.pr_title.outputs.data.title }}" | jq -r '.title')
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
           echo $PR_TITLE
 
@@ -50,4 +50,3 @@ jobs:
 
           # Push changes back to the PR branch
           git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}
-          
