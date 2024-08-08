@@ -40,8 +40,8 @@ jobs:
       - name: Squash All Commits and Push
         run: |
           # Get PR title from previous step
-          PR_TITLE=${{ steps.pr_title.outputs.result | toLower }}
-          
+          PR_TITLE=$(echo '${{ steps.pr_title.outputs.result }}' | tr '[:upper:]' '[:lower:]')"
+
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
 
           # Rebase the PR branch to main/master
