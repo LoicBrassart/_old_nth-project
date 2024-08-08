@@ -35,7 +35,6 @@ jobs:
       - name: Squash All Commits and Push
         run: |
           # Get PR title from previous step
-          
           PR_TITLE="SQUASH"
 
           # Rebase the PR branch to main/master
