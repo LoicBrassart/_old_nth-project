@@ -41,6 +41,7 @@ jobs:
         run: |
           # Get PR title from previous step
           PR_TITLE=${{ steps.pr_title.outputs.result | toLower }}
+          
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
 
           # Rebase the PR branch to main/master
