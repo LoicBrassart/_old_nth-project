@@ -37,6 +37,7 @@ jobs:
           # Get PR title from previous step
           PR_TITLE=$(echo "${{ steps.pr_title.outputs.data }}" | jq -r '.title')
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
+          echo $PR_TITLE
 
           # Rebase the PR branch to main/master
           git fetch origin $BRANCH_NAME:$BRANCH_NAME
