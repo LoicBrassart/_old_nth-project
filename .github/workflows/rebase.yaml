@@ -39,19 +39,18 @@ jobs:
 
       - name: Squash All Commits and Push
         run: |
-          # Get PR title from previous step
+          # Get PR title from previous step and Branch name
           PR_TITLE=$(echo '${{ steps.pr_title.outputs.result }}' | tr '[:upper:]' '[:lower:]')"
-
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
 
           # Rebase the PR branch to main/master
-          git fetch origin $BRANCH_NAME:$BRANCH_NAME
-          git rebase origin/$BRANCH_NAME
+          git fetch origin ${{ $BRANCH_NAME }}:${{ $BRANCH_NAME }}
+          git rebase origin/${{ $BRANCH_NAME }}
 
           # Squash all commits
           git reset $(git merge-base HEAD origin/${{ github.event.pull_request.base.ref }})
           git add .
-          git commit -m "ci: $PR_TITLE"
+          git commit -m "ci: $ {{ $PR_TITLE }}"
 
           # Push changes back to the PR branch
           git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}
