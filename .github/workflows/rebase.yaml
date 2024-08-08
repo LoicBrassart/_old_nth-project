@@ -38,14 +38,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Squash All Commits and Push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Get PR title from previous step
           PR_TITLE="$(echo '${{ steps.pr_title.outputs.result }}' | tr '[:upper:]' '[:lower:]')"
 
+          # Determine the branch name to push changes
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
+          PR_BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+
+          # Output some debugging info
+          echo "Base Branch Name: $BRANCH_NAME"
+          echo "Pull Request Branch Name: $PR_BRANCH_NAME"
+          echo "Commit Message: ci: $PR_TITLE"
 
           # Rebase the PR branch to main/master
           git fetch origin $BRANCH_NAME:$BRANCH_NAME
+          git checkout $PR_BRANCH_NAME
           git rebase origin/$BRANCH_NAME
 
           # Squash all commits
@@ -54,4 +64,4 @@ jobs:
           git commit -m "ci: $PR_TITLE"
 
           # Push changes back to the PR branch
-          git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}
+          git push --force-with-lease origin $PR_BRANCH_NAME
