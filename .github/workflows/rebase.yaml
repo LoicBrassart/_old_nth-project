@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Squash All Commits and Push
-        run: `|
+        run: |
           # Get PR title from previous step
           PR_TITLE=$(echo "${{ steps.pr_title.outputs.data.title }}")
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
@@ -50,4 +50,4 @@ jobs:
 
           # Push changes back to the PR branch
           git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}
-          `
+          
