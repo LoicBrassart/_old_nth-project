@@ -24,11 +24,10 @@ jobs:
       # Metadata
       - name: Show some metadata about the PR
         run: |
-          INCOMING_BRANCH=${{ github.event.pull_request.base.ref }}
-          BASE_BRANCH=${{ github.event.pull_request.head.ref }}
+          BASE_BRANCH=${{ github.event.pull_request.base.ref }}
+          INCOMING_BRANCH=${{ github.event.pull_request.head.ref }}
           echo "Base Branch: $BASE_BRANCH"
           echo "Incoming Branch: $INCOMING_BRANCH"
-          echo "Commit: ${{ github.sha }}"
 
       # Real Jobs
       - name: Run tests
