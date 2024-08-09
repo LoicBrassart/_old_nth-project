@@ -41,7 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Get PR title from previous step
+          # Get variables from previous step and github object
           PR_TITLE="$(echo '${{ steps.pr_title.outputs.result }}' | tr '[:upper:]' '[:lower:]')"
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
           PR_BRANCH_NAME=${{ github.event.pull_request.head.ref }}
@@ -63,4 +63,4 @@ jobs:
           git commit -m "ci: $PR_TITLE"
 
           # Push changes back to the PR branch
-          git push --force-with-lease origin $PR_BRANCH_NAME
+          git push --force-with-lease "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" $PR_BRANCH_NAME
