@@ -1,4 +1,4 @@
-name: Web Front
+name: Front
 
 on:
   pull_request:
@@ -24,4 +24,18 @@ jobs:
       # Real Jobs
       - name: Run tests
         working-directory: ./web-app/
+        run: npm ci && npm run test
+
+  tba:
+    runs-on: ubuntu-latest
+    steps:
+      # Base Initialization
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Install Dependencies
+        run: npm ci
+
+      # Real Jobs
+      - name: Run tests
+        working-directory: ./e2e/
         run: npm ci && npm run test
