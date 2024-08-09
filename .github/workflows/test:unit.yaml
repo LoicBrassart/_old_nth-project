@@ -6,7 +6,7 @@ on:
       - dev
       - master
       - main
-    types: [opened, reopened, edited]
+    types: [opened, reopened, edited, synchronize]
 
 jobs:
   lint:
