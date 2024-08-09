@@ -7,9 +7,9 @@ on:
       - master
       - main
     types: [opened, reopened, synchronize]
-  paths:
-    - 'web-app/**'
-    - '.github/workflows/webapp-test:unit.yaml'
+  # paths:
+  #   - 'web-app/**'
+  #   - '.github/workflows/webapp-test:unit.yaml'
 
 jobs:
   tu:
@@ -22,8 +22,6 @@ jobs:
         run: npm ci
 
       # Real Jobs
-      - name: Frontend
+      - name: Run tests
         working-directory: ./web-app/
-        run: |
-          npm ci
-          npm run test
+        run: npm ci && npm run test
