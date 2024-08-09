@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Web Front - TU
 
 on:
   pull_request:
@@ -7,9 +7,12 @@ on:
       - master
       - main
     types: [opened, reopened, synchronize]
+  paths:
+    - 'web-app/**'
+    - '.github/workflows/webapp-test:unit.yaml'
 
 jobs:
-  lint:
+  tu:
     runs-on: ubuntu-latest
     steps:
       # Base Initialization
@@ -20,8 +23,7 @@ jobs:
 
       # Real Jobs
       - name: Frontend
+        working-directory: ./web-app/
         run: |
-          cd web-app
           npm ci
           npm run test
-      # TODO: Backend + Others
