@@ -1,4 +1,4 @@
-name: Web Front
+name: Front
 
 on:
   pull_request:
@@ -11,8 +11,31 @@ on:
       - 'web-app/**'
       - '.github/workflows/webapp-test:unit.yaml'
 
-jobs:
+jobs:  
   unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Base Initialization
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: Install Dependencies
+        run: npm ci
+
+      # Metadata
+      - name: Show some metadata about the PR
+        run: |
+          INCOMING_BRANCH=${{ github.event.pull_request.base.ref }}
+          BASE_BRANCH=${{ github.event.pull_request.head.ref }}
+          echo "Base Branch: $BASE_BRANCH"
+          echo "Incoming Branch: $INCOMING_BRANCH"
+          echo "Commit: ${{ github.sha }}"
+
+      # Real Jobs
+      - name: Run tests
+        working-directory: ./web-app/
+        run: npm ci && npm run test
+
+  e2e-tests:
     runs-on: ubuntu-latest
     steps:
       # Base Initialization
@@ -23,5 +46,5 @@ jobs:
 
       # Real Jobs
       - name: Run tests
-        working-directory: ./web-app/
+        working-directory: ./e2e/
         run: npm ci && npm run test
